@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzler/question.dart';
 
 void main() => runApp(Quizzler());
 
@@ -27,16 +28,12 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
-  List<String> questions = [
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'A slug\'s blood is green.',
-  ];
-
-  List<bool> answers = [
-    false,
-    true,
-    true,
+  List<Question> QuestionBack = [
+    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
+    Question(
+        q: 'Approximately one quarter of human bones are in the feet.',
+        a: true),
+    Question(q: 'A slug\'s blood is green.', a: true),
   ];
 
   @override
@@ -51,7 +48,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions.first,
+                QuestionBack.first.questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -75,7 +72,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool corretAnswer = answers.first;
+                bool corretAnswer = QuestionBack.first.questionAnswer;
 
                 if (corretAnswer == true) {
                   scoreKeeper.add(
@@ -95,8 +92,7 @@ class _QuizPageState extends State<QuizPage> {
 
                 //The user picked true.
                 setState(() {
-                  answers.remove(answers.first);
-                  questions.remove(questions.first);
+                  QuestionBack.remove(QuestionBack.first);
                 });
               },
             ),
@@ -115,7 +111,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool corretAnswer = answers.first;
+                bool corretAnswer = QuestionBack.first.questionAnswer;
 
                 if (corretAnswer == false) {
                   scoreKeeper.add(
@@ -135,8 +131,7 @@ class _QuizPageState extends State<QuizPage> {
 
                 //The user picked true.
                 setState(() {
-                  answers.remove(answers.first);
-                  questions.remove(questions.first);
+                  QuestionBack.remove(QuestionBack.first);
                 });
               },
             ),
