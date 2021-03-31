@@ -33,6 +33,12 @@ class _QuizPageState extends State<QuizPage> {
     'A slug\'s blood is green.',
   ];
 
+  List<bool> answers = [
+    false,
+    true,
+    true,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -69,15 +75,28 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked true.
-                setState(() {
-                  questions.remove(questions.first);
+                bool corretAnswer = answers.first;
+
+                if (corretAnswer == true) {
                   scoreKeeper.add(
                     Icon(
                       Icons.check,
                       color: Colors.green,
                     ),
                   );
+                } else {
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                }
+
+                //The user picked true.
+                setState(() {
+                  answers.remove(answers.first);
+                  questions.remove(questions.first);
                 });
               },
             ),
@@ -96,15 +115,28 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked false.
-                setState(() {
-                  questions.remove(questions.first);
+                bool corretAnswer = answers.first;
+
+                if (corretAnswer == false) {
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                } else {
                   scoreKeeper.add(
                     Icon(
                       Icons.close,
                       color: Colors.red,
                     ),
                   );
+                }
+
+                //The user picked true.
+                setState(() {
+                  answers.remove(answers.first);
+                  questions.remove(questions.first);
                 });
               },
             ),
