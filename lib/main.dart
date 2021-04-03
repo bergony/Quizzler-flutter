@@ -43,7 +43,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.QuestionBack.first.questionText,
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -67,7 +67,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool corretAnswer = quizBrain.QuestionBack.first.questionAnswer;
+                bool corretAnswer = quizBrain.getQuestionAnswer();
 
                 if (corretAnswer == true) {
                   scoreKeeper.add(
@@ -87,7 +87,7 @@ class _QuizPageState extends State<QuizPage> {
 
                 //The user picked true.
                 setState(() {
-                  quizBrain.QuestionBack.remove(quizBrain.QuestionBack.first);
+                  quizBrain.nextQuestion();
                 });
               },
             ),
@@ -106,7 +106,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool corretAnswer = quizBrain.QuestionBack.first.questionAnswer;
+                bool corretAnswer = quizBrain.getQuestionAnswer();
 
                 if (corretAnswer == false) {
                   scoreKeeper.add(
@@ -126,7 +126,7 @@ class _QuizPageState extends State<QuizPage> {
 
                 //The user picked true.
                 setState(() {
-                  quizBrain.QuestionBack.remove(quizBrain.QuestionBack.first);
+                  quizBrain.nextQuestion();
                 });
               },
             ),
