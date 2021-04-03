@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+//: Step 2 - Import the rFlutter_Alert package here.
 
 QuizBrain quizBrain = QuizBrain();
 
@@ -29,27 +32,49 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
+  int right = 0;
+  int wrong = 0;
 
   void checkAnswer(bool userPickedAnswer) {
     bool corretAnswer = quizBrain.getQuestionAnswer();
     setState(() {
-      if (userPickedAnswer == corretAnswer) {
-        scoreKeeper.add(
-          Icon(
-            Icons.check,
-            color: Colors.green,
-          ),
-        );
+      //: Step 4 - Use IF/ELSE to check if we've reached the end of the quiz. If true, execute Part A, B, C, D.
+      if (quizBrain.isFinished()) {
+        //: Step 4 Part A - show an alert using rFlutter_alert (remember to read the docs for the package!)
+        Alert(
+                context: context,
+                title: "End of Quiz",
+                desc: "Right = $right, Wrong = $wrong.")
+            .show();
+        //HINT! Step 4 Part B is in the quiz_brain.dart
+        //: Step 4 Part C - reset the questionNumber,
+        quizBrain.reset();
+        //: Step 4 Part D - empty out the scoreKeeper.
+        scoreKeeper = [];
+        right = 0;
+        wrong = 0;
       } else {
-        scoreKeeper.add(
-          Icon(
-            Icons.close,
-            color: Colors.red,
-          ),
-        );
+        //TODO: Step 5 - If we've not reached the end, ELSE do the answer checking steps below 👇
+        if (userPickedAnswer == corretAnswer) {
+          right++;
+          scoreKeeper.add(
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          );
+        } else {
+          wrong++;
+          scoreKeeper.add(
+            Icon(
+              Icons.close,
+              color: Colors.red,
+            ),
+          );
+        }
+        //The user picked true.
+        quizBrain.nextQuestion();
       }
-      //The user picked true.
-      quizBrain.nextQuestion();
     });
   }
 
