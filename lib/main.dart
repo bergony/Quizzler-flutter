@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizzler/question.dart';
 import 'package:quizzler/quiz_brain.dart';
 
 QuizBrain quizBrain = QuizBrain();
@@ -30,6 +29,29 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
+
+  void checkAnswer(bool userPickedAnswer) {
+    bool corretAnswer = quizBrain.getQuestionAnswer();
+    setState(() {
+      if (userPickedAnswer == corretAnswer) {
+        scoreKeeper.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      } else {
+        scoreKeeper.add(
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
+      }
+      //The user picked true.
+      quizBrain.nextQuestion();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,28 +89,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool corretAnswer = quizBrain.getQuestionAnswer();
-
-                if (corretAnswer == true) {
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
-                } else {
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                  );
-                }
-
-                //The user picked true.
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(true);
               },
             ),
           ),
@@ -106,28 +107,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool corretAnswer = quizBrain.getQuestionAnswer();
-
-                if (corretAnswer == false) {
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
-                } else {
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                  );
-                }
-
-                //The user picked true.
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(false);
               },
             ),
           ),
